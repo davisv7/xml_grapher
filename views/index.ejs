@@ -19,16 +19,15 @@
   <body>
 
     <h1>Datasets</h1>
-
+    <!-- make a canvas for each graph, with unique id  -->
     <% datasets.forEach(function(dataset,index){ %>
-      <% var id = "chart"+index%>
+      <% var id = "chart"+index %>
       <canvas id=<%= id %>></canvas>
           <% }) %>
-    <!-- chart container -->
-    <!-- <canvas id="chart"></canvas> -->
 
-    <!-- fetches data from api/data page & renders chart from data returned -->
+
     <script>
+      <%# need to use json.stringify so js can use node variables %>
       var ds = <%- JSON.stringify(datasets) %>;
       for (var i = 0; i<ds.length;i++ ){
           var ctx = document.getElementById('chart'+i).getContext('2d');
