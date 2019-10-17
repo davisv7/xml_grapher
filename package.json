@@ -1,0 +1,28 @@
+{
+  "name": "xml_grapher",
+  "version": "1.0.0",
+  "description": "web app to uploard xml files, parse them for data, and graph that data",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -p 8080 -f index.html",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify test.js -o bundle.js -d"
+  },
+  "author": "v1ntage",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^16.5.0",
+    "browserify-fs": "^1.0.0",
+    "chart.js": "^2.8.0",
+    "cheerio": "^1.0.0-rc.3",
+    "concurrently": "^5.0.0",
+    "cors": "^2.8.5",
+    "dom-event-listener": "^1.0.5",
+    "domready": "^1.0.8",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "http-server": "^0.11.1",
+    "pug": "^2.0.4",
+    "watchify": "^3.11.1"
+  }
+}
