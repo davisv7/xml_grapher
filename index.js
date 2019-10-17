@@ -17,20 +17,20 @@ app.set('view engine','ejs');
 // Route for main (only?) page
 app.get('/',function(req,res){
 	xmlfiles = getXMLFiles();
-console.log(xmlfiles);
+// console.log(xmlfiles);
 	res.render('index',{
     filenames:xmlfiles
   });
 });
 
 app.get('/:filename',function(req,res){
-	var xmlfiles = getXMLFiles();
-	var datasets = getListOfDatasets(xmlfiles);
+	xmlfiles = getXMLFiles();
+	datasets = getListOfDatasets(xmlfiles);
 	var filename = req.params.filename;
 	var result = datasets.filter(obj => {
 		return obj.name == filename
 	})[0]
-	console.log(result);
+	// console.log(result);
 	res.render('file',{
     dataset:result
   });
@@ -43,6 +43,12 @@ var server = app.listen(1337, function(){
 	console.log('Your app is running on port',port);
 });
 
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).render('index',{
+	    filenames:xmlfiles
+	  });
+})
 
 
 
@@ -63,7 +69,7 @@ var server = app.listen(1337, function(){
 
 //function to get list of dataset from xml files
 function getListOfDatasets(xmlfiles){
-  console.log(xmlfiles.length);
+  // console.log(xmlfiles.length);
   datasets = [];
   for (var i =0; i< xmlfiles.length; i++){
     var filesPath = path.join(__dirname, xmlfiles[i]);
