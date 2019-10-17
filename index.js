@@ -78,7 +78,9 @@ function getListOfDatasets(xmlfiles){
     // console.log(datapoints.length)
     for (var j = 0; j < datapoints.length; j++) {
       // console.log(datapoints[i].data);
-      data.push(datapoints[j].data);
+			if (datapoints[j].data != 0){
+				data.push(datapoints[j].data);
+			}
     }
 		dataset.data = data;
 		dataset.name = xmlfiles[i];
