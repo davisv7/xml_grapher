@@ -1,0 +1,55 @@
+<!DOCTYPE hmtl>
+
+<html>
+
+  <head>
+
+    <!-- Chart.js CDN script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
+    <style>
+      canvas{
+        height: 300px !important;
+        width: 500px !important;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <h1>Dataset</h1>
+    <h2><%= dataset.name %></h2>
+    <!-- make a canvas for each graph, with unique id  -->
+      <canvas id="chart"></canvas>
+
+
+    <script>
+      <%# need to use json.stringify so js can use node variables %>
+      var ds = <%- JSON.stringify(dataset) %>;
+          var ctx = document.getElementById('chart').getContext('2d');
+          var myLineChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: Array.from(Array(ds.data.length).keys()),
+                datasets: [
+                  {
+                    label: 'Values at Index',
+                    data: ds.data,
+                    fill: false,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderWidth: 1
+                  }
+                ]
+              },
+              options: {
+                responsive:false
+              }
+          });
+    </script>
+    <a href="/"  >home</a>
+
+  </body>
+
+</html>

@@ -13,17 +13,30 @@ var app = express();
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
+//make these values global, so we can use them across different functions
+// may want to change this if program becomes undynamic
+xmlfiles = getXMLFiles();
+datasets = getListOfDatasets(xmlfiles);
 
 // Route for main (only?) page
 app.get('/',function(req,res){
 	xmlfiles = getXMLFiles();
 console.log(xmlfiles);
-datasets = getListOfDatasets(xmlfiles);
 	res.render('index',{
-    datasets:datasets
+    filenames:xmlfiles
   });
 });
 
+app.get('/:filename',function(req,res){
+	var filename = req.params.filename;
+	var result = datasets.filter(obj => {
+		return obj.name == filename
+	})[0]
+	console.log(result);
+	res.render('file',{
+    dataset:result
+  });
+});
 
 // Start server
 var server = app.listen(1337, function(){
@@ -43,14 +56,17 @@ var server = app.listen(1337, function(){
 
 
 
-
+// datasets =[{
+// name: "xmlfile1",
+// data: [0,...,0]
+//}
+//]
 
 
 //function to get list of dataset from xml files
 function getListOfDatasets(xmlfiles){
   console.log(xmlfiles.length);
   datasets = [];
-
   for (var i =0; i< xmlfiles.length; i++){
     var filesPath = path.join(__dirname, xmlfiles[i]);
     content = fs.readFileSync(filesPath);
@@ -59,12 +75,15 @@ function getListOfDatasets(xmlfiles){
       xmlMode: true,
     });
     var datapoints = $('arrRecordedDataPoints').contents();
-    var dataset = [];
+    var dataset = {};
+		var data = [];
     // console.log(datapoints.length)
     for (var j = 0; j < datapoints.length; j++) {
       // console.log(datapoints[i].data);
-      dataset.push(datapoints[j].data);
+      data.push(datapoints[j].data);
     }
+		dataset.data = data;
+		dataset.name = xmlfiles[i];
     datasets.push(dataset);
 
   }
