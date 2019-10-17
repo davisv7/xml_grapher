@@ -13,10 +13,6 @@ var app = express();
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine','ejs');
 
-//make these values global, so we can use them across different functions
-// may want to change this if program becomes undynamic
-xmlfiles = getXMLFiles();
-datasets = getListOfDatasets(xmlfiles);
 
 // Route for main (only?) page
 app.get('/',function(req,res){
@@ -28,6 +24,8 @@ console.log(xmlfiles);
 });
 
 app.get('/:filename',function(req,res){
+	var xmlfiles = getXMLFiles();
+	var datasets = getListOfDatasets(xmlfiles);
 	var filename = req.params.filename;
 	var result = datasets.filter(obj => {
 		return obj.name == filename
